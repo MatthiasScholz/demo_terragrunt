@@ -11,7 +11,7 @@ terraform {
 
 inputs = {
   product_name = local.product_name
-  environment  = local.state_key
+  environment  = local.env
 }
 
 generate "provider" {
