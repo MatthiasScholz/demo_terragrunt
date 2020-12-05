@@ -1,0 +1,5 @@
+
+
+dependencies {
+  paths = ["../application-base"]
+}
