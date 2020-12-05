@@ -3,7 +3,6 @@ locals {
   product_vars = yamldecode(file(find_in_parent_folders("product.yaml")))
   env          = get_env("ENV")
   product_name = local.product_vars.product_name
-  state_key="${local.product_name}/${local.env}/${local.module}"
 }
 
 terraform {
