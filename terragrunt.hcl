@@ -3,6 +3,7 @@ locals {
   product_vars = yamldecode(file(find_in_parent_folders("product.yaml")))
   env          = get_env("ENV")
   product_name = local.product_vars.product_name
+  state_key="${local.product_name}/${local.env}/${local.module}"
 }
 
 terraform {
@@ -22,5 +23,19 @@ provider "aws" {
   region="eu-central-1"
 }
 EOF
+}
+
+remote_state {
+  backend  = "s3"
+  generate = {
+    path      = "backend.tf"
+    if_exists = "overwrite"
+  }
+  config   = {
+    bucket  = "tw-infra-test-bucket"
+    key     = "${local.state_key}/terraform.tfstate"
+    region  = "eu-central-1"
+    encrypt = true
+  }
 }
 
